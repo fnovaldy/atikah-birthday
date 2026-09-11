@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atikah Birthday💕</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap');
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #09c0f2 0%, #fecfef 99%, #fecfef 100%);
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            color: #d63384;
+            height: 100vh;
+        }
+
+        #game-container {
+            position: absolute;
+            top: 15%;
+            width: 100%;
+            z-index: 10;
+            pointer-events: none; 
+        }
+
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 24px;
+            margin: 0 20px;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.7);
+        }
+
+        #score {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            font-size: 50px;
+            cursor: pointer;
+            user-select: none;
+            animation: floatUp linear infinite;
+            z-index: 5;
+            pointer-events: auto; 
+            transition: transform 0.1s;
+        }
+
+        .heart:active {
+            transform: scale(0.8);
+        }
+
+        @keyframes floatUp {
+            to { transform: translateY(-120vh) rotate(360deg); }
+        }
+
+        #message-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(214, 51, 132, 0.4);
+            z-index: 20;
+            width: 85%;
+            max-width: 420px;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 90vh;
+            overflow-y: auto; 
+        }
+
+        #message-container.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* GIF ATAS */
+        #couple-gif {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* GRID 2 FOTO DI BAWAH GIF */
+        #photo-subgrid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        #photo-subgrid img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        #message-container h2 {
+            font-family: 'Fredoka One', cursive;
+            color: #ff4757;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        #message-container p {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <h1>Tangkap 10 Hati Untuk Membuka Kejutan! 🎁</h1>
+        <div id="score">Hati terkumpul: 0 / 10</div>
+    </div>
+
+    <div id="message-container">
+        <img id="couple-gif" src="foto.gif" alt="Momen Spesial GIF">
+        
+        <div id="photo-subgrid">
+            <img src="foto1.jpeg" alt="Foto Kenangan 1">
+            <img src="foto2.jpeg" alt="Foto Kenangan 2">
+        </div>
+        
+        <h2>Selamat Ulang Tahun, Sayang! 🎉🎂</h2>
+        <p>Semoga di umur yang baru ini, kamu semakin bahagia, sehat selalu, dan semua yang kamu impikan bisa tercapai.</p>
+        <p>Terima kasih sudah jadi orang yang paling spesial buat aku. Love You💕</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        let score = 0;
+        const targetScore = 10;
+        let gameInterval;
+
+        const backgroundMusic = new Audio('lagu.mp3');
+        backgroundMusic.loop = true; 
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            const heartsEmoji = ['❤️', '💖', '💘', '💕', '🥰'];
+            heart.innerHTML = heartsEmoji[Math.floor(Math.random() * heartsEmoji.length)];
+            
+            heart.style.left = Math.random() * 80 + 10 + 'vw'; 
+            
+            const duration = Math.random() * 3 + 3; 
+            heart.style.animationDuration = duration + 's';
+
+            heart.onclick = function() {
+                score++;
+                document.getElementById('score').innerText = `Hati terkumpul: ${score} / ${targetScore}`;
+                this.remove(); 
+
+                if (score >= targetScore) {
+                    winGame();
+                }
+            };
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                if(document.body.contains(heart)) heart.remove();
+            }, duration * 1000);
+        }
+
+        function startGame() {
+            gameInterval = setInterval(createHeart, 600);
+        }
+
+        function fireConfetti() {
+            confetti({
+                particleCount: 40,
+                angle: 60,
+                spread: 70,
+                origin: { x: 0, y: 0.8 },
+                zIndex: 9999,
+                colors: ['#ff4757', '#ff9a9e', '#fecfef', '#ffffff']
+            });
+            confetti({
+                particleCount: 40,
+                angle: 120,
+                spread: 70,
+                origin: { x: 1, y: 0.8 },
+                zIndex: 9999,
+                colors: ['#ff4757', '#ff9a9e', '#fecfef', '#ffffff']
+            });
+        }
+
+        function winGame() {
+            clearInterval(gameInterval); 
+            
+            document.getElementById('game-container').classList.add('hidden');
+            
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach(h => h.remove());
+
+            const msgContainer = document.getElementById('message-container');
+            msgContainer.classList.add('show');
+
+            backgroundMusic.play().catch(error => {
+                console.log("Autoplay musik diblokir browser.");
+            });
+
+            fireConfetti();
+            setInterval(fireConfetti, 5000);
+        }
+
+        window.onload = startGame;
+    </script>
+
+</body>
+</html>
