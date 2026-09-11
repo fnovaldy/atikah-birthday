@@ -15,6 +15,7 @@
             text-align: center;
             color: #d63384;
             height: 100vh;
+            touch-action: manipulation; /* Mencegah layar nge-zoom saat di-tap cepat di HP */
         }
 
         #game-container {
@@ -49,6 +50,7 @@
             font-size: 50px;
             cursor: pointer;
             user-select: none;
+            -webkit-tap-highlight-color: transparent; /* Hilangkan kotak sorot biru di HP */
             animation: floatUp linear infinite;
             z-index: 5;
             pointer-events: auto; 
@@ -173,7 +175,9 @@
             const duration = Math.random() * 3 + 3; 
             heart.style.animationDuration = duration + 's';
 
-            heart.onclick = function() {
+            // FUNGSI UNTUK MERESPON SENTUHAN HP & KLIK MOUSE
+            function tangkapHati(e) {
+                e.preventDefault(); 
                 score++;
                 document.getElementById('score').innerText = `Hati terkumpul: ${score} / ${targetScore}`;
                 this.remove(); 
@@ -181,7 +185,11 @@
                 if (score >= targetScore) {
                     winGame();
                 }
-            };
+            }
+
+            // Mendukung layar sentuh HP (touchstart) dan mouse laptop (mousedown)
+            heart.addEventListener('touchstart', tangkapHati, {passive: false});
+            heart.addEventListener('mousedown', tangkapHati);
 
             document.body.appendChild(heart);
 
