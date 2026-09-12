@@ -18,14 +18,6 @@
             touch-action: manipulation; 
         }
 
-
-        @keyframes drift {
-            0% { transform: translateY(110vh) translateX(0) scale(1); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) translateX(30px) scale(0.5); opacity: 0; }
-        }
-
         #game-container {
             position: absolute;
             top: 15%;
@@ -73,7 +65,7 @@
             to { transform: translateY(-120vh) rotate(360deg); }
         }
 
-        /* TAMPILAN KOTAK KADO */
+        /* TAMPILAN KOTAK KADO AWAL */
         #gift-container {
             position: absolute;
             top: 50%;
@@ -102,12 +94,12 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             color: #fff;
-            background: #d63384;
+            background: #47a9ff;
             padding: 10px 20px;
             border-radius: 20px;
             margin-top: 15px;
             font-size: 16px;
-            box-shadow: 0 4px 10px rgba(214, 51, 132, 0.4);
+            box-shadow: 0 4px 10px rgba(71, 169, 255, 0.4);
             animation: pulseText 1.5s infinite;
         }
 
@@ -116,8 +108,8 @@
             50% { transform: scale(1.05); }
         }
 
-        /* KOTAK PESAN UTAMA */
-        #message-container {
+        /* STYLING POP-UP CONTAINER (HALAMAN 1 & 2) */
+        .popup-box {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -125,17 +117,19 @@
             background: rgba(255, 255, 255, 0.95); 
             padding: 25px;
             border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(214, 51, 132, 0.4);
+            box-shadow: 0 10px 30px rgba(71, 169, 255, 0.3);
             z-index: 20;
             width: 85%;
             max-width: 420px;
             transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             max-height: 90vh;
-            overflow-y: auto; 
+            overflow-y: auto;
+            visibility: hidden;
         }
 
-        #message-container.show {
+        .popup-box.show {
             transform: translate(-50%, -50%) scale(1);
+            visibility: visible;
         }
 
         #couple-gif {
@@ -163,7 +157,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        #message-container h2 {
+        .popup-box h2 {
             font-family: 'Fredoka One', cursive;
             color: #47a9ff;
             margin-top: 0;
@@ -171,17 +165,52 @@
             font-size: 22px;
         }
 
-        #message-container p {
+        .popup-box p {
             font-size: 14px;
             color: #555;
             line-height: 1.6;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
-        /* TOMBOL WHATSAPP UNTUK DINNER */
+        /* TOMBOL BUKA KADO KE-2 */
+        #next-btn {
+            display: inline-block;
+            margin-top: 5px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #2c6af0, #57cdf8);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(44, 106, 240, 0.4);
+            transition: transform 0.2s;
+        }
+
+        #next-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* HALAMAN 2: DINNER */
+        .dinner-icon {
+            font-size: 70px;
+            margin-bottom: 10px;
+            animation: pulseText 2s infinite;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        /* TOMBOL WHATSAPP */
         #wa-btn {
             display: inline-block;
-            margin-top: 10px;
             padding: 12px 25px;
             background: linear-gradient(135deg, #2c6af0, #57cdf8);
             color: white;
@@ -190,8 +219,9 @@
             font-weight: 600;
             font-size: 15px;
             border-radius: 30px;
-            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
+            box-shadow: 0 4px 15px rgba(44, 106, 240, 0.4);
             animation: pulseBtn 2s infinite;
+            width: 80%;
         }
 
         #wa-btn:active {
@@ -199,9 +229,30 @@
         }
 
         @keyframes pulseBtn {
-            0% { box-shadow: 0 0 0 0 rgba(214, 51, 132, 0.7); }
-            70% { box-shadow: 0 0 0 12px rgba(214, 51, 132, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(214, 51, 132, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(44, 106, 240, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(44, 106, 240, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(44, 106, 240, 0); }
+        }
+
+        /* TOMBOL KEMBALI */
+        #back-btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background: transparent;
+            color: #2c6af0;
+            border: 2px solid #2c6af0;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            border-radius: 30px;
+            transition: all 0.2s;
+            width: 80%;
+        }
+
+        #back-btn:active {
+            transform: scale(0.95);
+            background: rgba(44, 106, 240, 0.1);
         }
 
         .hidden {
@@ -216,12 +267,14 @@
         <div id="score">Hati terkumpul: 0 / 10</div>
     </div>
 
+    <!-- EFEK KADO AWAL -->
     <div id="gift-container" class="hidden">
-        <div id="gift-box" onclick="openGift()">🎁</div>
+        <div id="gift-box" onclick="openFirstGift()">🎁</div>
         <p>Yay! Ada kado buat kamu, klik untuk buka!</p>
     </div>
 
-    <div id="message-container">
+    <!-- HALAMAN 1: UCAPAN & FOTO -->
+    <div id="message-container" class="popup-box">
         <img id="couple-gif" src="foto.gif" alt="Momen Spesial GIF">
         
         <div id="photo-subgrid">
@@ -230,13 +283,26 @@
         </div>
         
         <h2>Selamat Ulang Tahun, Sayang! 🎉🎂</h2>
-        <p>Semoga di umur yang baru ini, kamu semakin bahagia, sehat selalu, dan semua impian kamu tercapai. Love You💕</p>
-        <p>Aku mau ajak kamu dinner nanti malem, mau ya? </p>
+        <p>Semoga di umur yang baru ini, kamu semakin bahagia, sehat selalu, dan semua yang kamu impikan bisa tercapai.</p>
+        <p>Terima kasih sudah jadi orang yang paling spesial buat aku. Love You💕</p>
         
-        <!-- TOMBOL WHATSAPP (GANTI NOMOR 6281234567890 DI BAWAH DENGAN NOMOR WA KAMU) -->
-        <a id="wa-btn" href="https://wa.me/6281294208573?text=Gasss%20sayangkuuu" target="_blank">
-            Terima Undangan Dinner 🍽️💕
-        </a>
+        <button id="next-btn" onclick="openSecondGift()">Ada Kejutan Ke-2 Nih... Klik Sini! 🎁</button>
+    </div>
+
+    <!-- HALAMAN 2: UNDANGAN DINNER -->
+    <div id="dinner-container" class="popup-box">
+        <div class="dinner-icon">🍷✨</div>
+        <h2>Satu Kejutan Lagi!</h2>
+        <p>Dandan yang cantik ya, nanti pulang kerja aku jemput buat dinner bareng. ❤️</p>
+        
+        <!-- GRUP TOMBOL BAWAH -->
+        <div class="button-group">
+            <a id="wa-btn" href="https://wa.me/6281294208573?text=Gasss%20sayangkuuu" target="_blank">
+                Terima Undangan Dinner 🍽️💕
+            </a>
+            
+            <button id="back-btn" onclick="goBack()">⬅️ Kembali Ke Ucapan</button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -245,28 +311,10 @@
         let score = 0;
         const targetScore = 10;
         let gameInterval;
+        let confettiInterval;
 
         const backgroundMusic = new Audio('lagu.mp3');
         backgroundMusic.loop = true; 
-
-        function createFireflies() {
-            const fireflyCount = 40; 
-            for (let i = 0; i < fireflyCount; i++) {
-                let firefly = document.createElement('div');
-                firefly.classList.add('firefly');
-                
-                let size = Math.random() * 4 + 2; 
-                firefly.style.width = `${size}px`;
-                firefly.style.height = `${size}px`;
-                
-                firefly.style.left = `${Math.random() * 100}vw`;
-                firefly.style.animationDuration = `${Math.random() * 10 + 5}s`; 
-                firefly.style.animationDelay = `${Math.random() * 5}s`;
-                firefly.style.boxShadow = `0 0 ${size * 2}px #ffffff`;
-                
-                document.body.appendChild(firefly);
-            }
-        }
 
         function createHeart() {
             const heart = document.createElement('div');
@@ -302,7 +350,6 @@
         }
 
         function startGame() {
-            createFireflies(); 
             gameInterval = setInterval(createHeart, 600);
         }
 
@@ -313,7 +360,7 @@
                 spread: 70,
                 origin: { x: 0, y: 0.8 },
                 zIndex: 9999,
-                colors: ['#ff4757', '#ff9a9e', '#fecfef', '#ffffff']
+                colors: ['#47a9ff', '#ff9a9e', '#fecfef', '#ffffff']
             });
             confetti({
                 particleCount: 40,
@@ -321,7 +368,7 @@
                 spread: 70,
                 origin: { x: 1, y: 0.8 },
                 zIndex: 9999,
-                colors: ['#ff4757', '#ff9a9e', '#fecfef', '#ffffff']
+                colors: ['#47a9ff', '#ff9a9e', '#fecfef', '#ffffff']
             });
         }
 
@@ -336,7 +383,7 @@
             document.getElementById('gift-container').classList.remove('hidden');
         }
 
-        function openGift() {
+        function openFirstGift() {
             document.getElementById('gift-container').classList.add('hidden');
 
             const msgContainer = document.getElementById('message-container');
@@ -347,7 +394,29 @@
             });
 
             fireConfetti();
-            setInterval(fireConfetti, 5000);
+            confettiInterval = setInterval(fireConfetti, 5000); 
+        }
+
+        function openSecondGift() {
+            const msgContainer = document.getElementById('message-container');
+            msgContainer.classList.remove('show');
+            
+            setTimeout(() => {
+                const dinnerContainer = document.getElementById('dinner-container');
+                dinnerContainer.classList.add('show');
+                fireConfetti(); 
+            }, 500); 
+        }
+
+        // FUNGSI UNTUK TOMBOL KEMBALI
+        function goBack() {
+            const dinnerContainer = document.getElementById('dinner-container');
+            dinnerContainer.classList.remove('show');
+            
+            setTimeout(() => {
+                const msgContainer = document.getElementById('message-container');
+                msgContainer.classList.add('show');
+            }, 500);
         }
 
         window.onload = startGame;
