@@ -15,7 +15,24 @@
             text-align: center;
             color: #d63384;
             height: 100vh;
-            touch-action: manipulation; /* Mencegah layar nge-zoom saat di-tap cepat di HP */
+            touch-action: manipulation; 
+        }
+
+        /* EFEK BINTANG / KUNANG-KUNANG */
+        .firefly {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1; 
+            animation: drift linear infinite;
+        }
+
+        @keyframes drift {
+            0% { transform: translateY(110vh) translateX(0) scale(1); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) translateX(30px) scale(0.5); opacity: 0; }
         }
 
         #game-container {
@@ -50,7 +67,7 @@
             font-size: 50px;
             cursor: pointer;
             user-select: none;
-            -webkit-tap-highlight-color: transparent; /* Hilangkan kotak sorot biru di HP */
+            -webkit-tap-highlight-color: transparent; 
             animation: floatUp linear infinite;
             z-index: 5;
             pointer-events: auto; 
@@ -65,12 +82,56 @@
             to { transform: translateY(-120vh) rotate(360deg); }
         }
 
+        /* TAMPILAN KOTAK KADO */
+        #gift-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 15;
+            text-align: center;
+        }
+
+        #gift-box {
+            font-size: 100px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            animation: shake 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            10%, 30%, 50%, 70%, 90% { transform: rotate(-10deg); }
+            20%, 40%, 60%, 80% { transform: rotate(10deg); }
+        }
+
+        #gift-container p {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #fff;
+            background: #d63384;
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin-top: 15px;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(214, 51, 132, 0.4);
+            animation: pulseText 1.5s infinite;
+        }
+
+        @keyframes pulseText {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* KOTAK PESAN UTAMA */
         #message-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
-            background: white;
+            background: rgba(255, 255, 255, 0.95); 
             padding: 25px;
             border-radius: 25px;
             box-shadow: 0 10px 30px rgba(214, 51, 132, 0.4);
@@ -86,7 +147,6 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
-        /* GIF ATAS */
         #couple-gif {
             width: 100%;
             height: 180px;
@@ -96,7 +156,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* GRID 2 FOTO DI BAWAH GIF */
         #photo-subgrid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -115,17 +174,43 @@
 
         #message-container h2 {
             font-family: 'Fredoka One', cursive;
-            color: #ff4757;
+            color: #47a9ff;
             margin-top: 0;
             margin-bottom: 10px;
             font-size: 22px;
         }
 
         #message-container p {
-            font-size: 15px;
+            font-size: 14px;
             color: #555;
             line-height: 1.6;
             margin-bottom: 10px;
+        }
+
+        /* TOMBOL WHATSAPP UNTUK DINNER */
+        #wa-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #2c6af0, #57cdf8);
+            color: white;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
+            animation: pulseBtn 2s infinite;
+        }
+
+        #wa-btn:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes pulseBtn {
+            0% { box-shadow: 0 0 0 0 rgba(214, 51, 132, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(214, 51, 132, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(214, 51, 132, 0); }
         }
 
         .hidden {
@@ -140,6 +225,11 @@
         <div id="score">Hati terkumpul: 0 / 10</div>
     </div>
 
+    <div id="gift-container" class="hidden">
+        <div id="gift-box" onclick="openGift()">🎁</div>
+        <p>Yay! Ada kado buat kamu, klik untuk buka!</p>
+    </div>
+
     <div id="message-container">
         <img id="couple-gif" src="foto.gif" alt="Momen Spesial GIF">
         
@@ -149,8 +239,14 @@
         </div>
         
         <h2>Selamat Ulang Tahun, Sayang! 🎉🎂</h2>
-        <p>Semoga di umur yang baru ini, kamu semakin bahagia, sehat selalu, dan semua yang kamu impikan bisa tercapai.</p>
+        <p>Semoga di umur yang baru ini, kamu semakin bahagia, sehat selalu, dan semua impian kamu tercapai.</p>
         <p>Terima kasih sudah jadi orang yang paling spesial buat aku. Love You💕</p>
+        <p>Aku mau ajak kamu dinner nanti malem, mau ya? </p>
+        
+        <!-- TOMBOL WHATSAPP (GANTI NOMOR 6281234567890 DI BAWAH DENGAN NOMOR WA KAMU) -->
+        <a id="wa-btn" href="https://wa.me/6281294208573?text=Gasss%20sayangkuuu" target="_blank">
+            Terima Undangan Dinner 🍽️💕
+        </a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -162,6 +258,25 @@
 
         const backgroundMusic = new Audio('lagu.mp3');
         backgroundMusic.loop = true; 
+
+        function createFireflies() {
+            const fireflyCount = 40; 
+            for (let i = 0; i < fireflyCount; i++) {
+                let firefly = document.createElement('div');
+                firefly.classList.add('firefly');
+                
+                let size = Math.random() * 4 + 2; 
+                firefly.style.width = `${size}px`;
+                firefly.style.height = `${size}px`;
+                
+                firefly.style.left = `${Math.random() * 100}vw`;
+                firefly.style.animationDuration = `${Math.random() * 10 + 5}s`; 
+                firefly.style.animationDelay = `${Math.random() * 5}s`;
+                firefly.style.boxShadow = `0 0 ${size * 2}px #ffffff`;
+                
+                document.body.appendChild(firefly);
+            }
+        }
 
         function createHeart() {
             const heart = document.createElement('div');
@@ -175,7 +290,6 @@
             const duration = Math.random() * 3 + 3; 
             heart.style.animationDuration = duration + 's';
 
-            // FUNGSI UNTUK MERESPON SENTUHAN HP & KLIK MOUSE
             function tangkapHati(e) {
                 e.preventDefault(); 
                 score++;
@@ -187,7 +301,6 @@
                 }
             }
 
-            // Mendukung layar sentuh HP (touchstart) dan mouse laptop (mousedown)
             heart.addEventListener('touchstart', tangkapHati, {passive: false});
             heart.addEventListener('mousedown', tangkapHati);
 
@@ -199,6 +312,7 @@
         }
 
         function startGame() {
+            createFireflies(); 
             gameInterval = setInterval(createHeart, 600);
         }
 
@@ -228,6 +342,12 @@
             
             const hearts = document.querySelectorAll('.heart');
             hearts.forEach(h => h.remove());
+
+            document.getElementById('gift-container').classList.remove('hidden');
+        }
+
+        function openGift() {
+            document.getElementById('gift-container').classList.add('hidden');
 
             const msgContainer = document.getElementById('message-container');
             msgContainer.classList.add('show');
