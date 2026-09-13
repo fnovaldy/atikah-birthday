@@ -108,8 +108,8 @@
             50% { transform: scale(1.05); }
         }
 
-        /* STYLING POP-UP CONTAINER (HALAMAN 1 & 2) */
-        .popup-box {
+        /* STYLING POP-UP UCAPAN UTAMA */
+        #message-container {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -124,12 +124,10 @@
             transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             max-height: 90vh;
             overflow-y: auto;
-            visibility: hidden;
         }
 
-        .popup-box.show {
+        #message-container.show {
             transform: translate(-50%, -50%) scale(1);
-            visibility: visible;
         }
 
         #couple-gif {
@@ -157,7 +155,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .popup-box h2 {
+        #message-container h2 {
             font-family: 'Fredoka One', cursive;
             color: #47a9ff;
             margin-top: 0;
@@ -165,94 +163,11 @@
             font-size: 22px;
         }
 
-        .popup-box p {
+        #message-container p {
             font-size: 14px;
             color: #555;
             line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        /* TOMBOL BUKA KADO KE-2 */
-        #next-btn {
-            display: inline-block;
-            margin-top: 5px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #2c6af0, #57cdf8);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 14px;
-            border-radius: 30px;
-            box-shadow: 0 4px 15px rgba(44, 106, 240, 0.4);
-            transition: transform 0.2s;
-        }
-
-        #next-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* HALAMAN 2: DINNER */
-        .dinner-icon {
-            font-size: 70px;
             margin-bottom: 10px;
-            animation: pulseText 2s infinite;
-        }
-
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        /* TOMBOL WHATSAPP */
-        #wa-btn {
-            display: inline-block;
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #2c6af0, #57cdf8);
-            color: white;
-            text-decoration: none;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 15px;
-            border-radius: 30px;
-            box-shadow: 0 4px 15px rgba(44, 106, 240, 0.4);
-            animation: pulseBtn 2s infinite;
-            width: 80%;
-        }
-
-        #wa-btn:active {
-            transform: scale(0.95);
-        }
-
-        @keyframes pulseBtn {
-            0% { box-shadow: 0 0 0 0 rgba(44, 106, 240, 0.7); }
-            70% { box-shadow: 0 0 0 12px rgba(44, 106, 240, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(44, 106, 240, 0); }
-        }
-
-        /* TOMBOL KEMBALI */
-        #back-btn {
-            display: inline-block;
-            padding: 8px 20px;
-            background: transparent;
-            color: #2c6af0;
-            border: 2px solid #2c6af0;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 13px;
-            border-radius: 30px;
-            transition: all 0.2s;
-            width: 80%;
-        }
-
-        #back-btn:active {
-            transform: scale(0.95);
-            background: rgba(44, 106, 240, 0.1);
         }
 
         .hidden {
@@ -267,14 +182,12 @@
         <div id="score">Hati terkumpul: 0 / 10</div>
     </div>
 
-    <!-- EFEK KADO AWAL -->
     <div id="gift-container" class="hidden">
-        <div id="gift-box" onclick="openFirstGift()">🎁</div>
+        <div id="gift-box" onclick="openGift()">🎁</div>
         <p>Yay! Ada kado buat kamu, klik untuk buka!</p>
     </div>
 
-    <!-- HALAMAN 1: UCAPAN & FOTO -->
-    <div id="message-container" class="popup-box">
+    <div id="message-container">
         <img id="couple-gif" src="foto.gif" alt="Momen Spesial GIF">
         
         <div id="photo-subgrid">
@@ -285,24 +198,6 @@
         <h2>Selamat Ulang Tahun, Sayang! 🎉🎂</h2>
         <p>Semoga di umur yang baru ini, kamu semakin bahagia, sehat selalu, dan semua yang kamu impikan bisa tercapai.</p>
         <p>Terima kasih sudah jadi orang yang paling spesial buat aku. Love You💕</p>
-        
-        <button id="next-btn" onclick="openSecondGift()">Ada Kejutan Ke-2 Nih... Klik Sini! 🎁</button>
-    </div>
-
-    <!-- HALAMAN 2: UNDANGAN DINNER -->
-    <div id="dinner-container" class="popup-box">
-        <div class="dinner-icon">🍷✨</div>
-        <h2>Satu Kejutan Lagi!</h2>
-        <p>Dandan yang cantik ya, nanti pulang kerja aku jemput buat dinner bareng. ❤️</p>
-        
-        <!-- GRUP TOMBOL BAWAH -->
-        <div class="button-group">
-            <a id="wa-btn" href="https://wa.me/6281294208573?text=Gasss%20sayangkuuu" target="_blank">
-                Terima Undangan Dinner 🍽️💕
-            </a>
-            
-            <button id="back-btn" onclick="goBack()">⬅️ Kembali Ke Ucapan</button>
-        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -383,7 +278,7 @@
             document.getElementById('gift-container').classList.remove('hidden');
         }
 
-        function openFirstGift() {
+        function openGift() {
             document.getElementById('gift-container').classList.add('hidden');
 
             const msgContainer = document.getElementById('message-container');
@@ -395,28 +290,6 @@
 
             fireConfetti();
             confettiInterval = setInterval(fireConfetti, 5000); 
-        }
-
-        function openSecondGift() {
-            const msgContainer = document.getElementById('message-container');
-            msgContainer.classList.remove('show');
-            
-            setTimeout(() => {
-                const dinnerContainer = document.getElementById('dinner-container');
-                dinnerContainer.classList.add('show');
-                fireConfetti(); 
-            }, 500); 
-        }
-
-        // FUNGSI UNTUK TOMBOL KEMBALI
-        function goBack() {
-            const dinnerContainer = document.getElementById('dinner-container');
-            dinnerContainer.classList.remove('show');
-            
-            setTimeout(() => {
-                const msgContainer = document.getElementById('message-container');
-                msgContainer.classList.add('show');
-            }, 500);
         }
 
         window.onload = startGame;
